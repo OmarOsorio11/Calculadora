@@ -15,64 +15,63 @@ namespace Calculadora
             InitializeComponent();
         }
 
-        // Event handler for number and operator buttons click
+        // Controlador de eventos para hacer clic en botones de números y operadores
         private void ButtonNumberOperator_Click(object sender, RoutedEventArgs e)
         {
-            // Append the clicked button's content (number or operator) to the input textbox
+            // Agregar el contenido del botón clicado (número u operador) al cuadro de texto de entrada
             tbInput.Text += (sender as Button).Content.ToString();
 
-            // Focus on the input textbox to receive further inputs
+            // Enfocar en el cuadro de texto de entrada para recibir más entradas
             tbInput.Focus();
 
-            // Evaluate the current expression and display the result in the output textbox
+            // Evaluar la expresión actual y mostrar el resultado en el cuadro de texto de salida
             tbOutput.Text = Calcula.EvaluarExpresion(tbInput.Text);
         }
 
-        // Event handler for text input preview in the input textbox
+        // Controlador de eventos para la vista previa de entrada de texto en el cuadro de texto de entrada
         private void tbInput_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            // Use a regular expression to prevent invalid characters from being entered
+            // Usar una expresión regular para evitar que se ingresen caracteres no válidos
             Regex regex = new Regex("[^0-9.*/+-]+");
             e.Handled = regex.IsMatch(e.Text);
-
-
         }
 
-        // Event handler for the "Delete" button click
+        // Controlador de eventos para el clic en el botón "Eliminar"
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-            // Remove the last character from the input textbox
+            // Eliminar el último carácter del cuadro de texto de entrada
             if (tbInput.Text.Length > 0)
             {
                 tbInput.Text = (tbInput.Text).Substring(0, tbInput.Text.Length - 1);
             }
 
-            // Evaluate the updated expression and display the result in the output textbox
+            // Evaluar la expresión actualizada y mostrar el resultado en el cuadro de texto de salida
             tbOutput.Text = Calcula.EvaluarExpresion(tbInput.Text);
         }
 
-        // Event handler for the "Delete All" button click
+        // Controlador de eventos para el clic en el botón "Borrar todo"
         private void btnDeleteAll_Click(object sender, RoutedEventArgs e)
         {
-            // Clear the input textbox
+            // Limpiar el cuadro de texto de entrada
             tbInput.Text = "";
 
-            // Set the output textbox to display "0"
+            // Establecer el cuadro de texto de salida para mostrar "0"
             tbOutput.Text = "0";
         }
 
-        // Event handler for the "Igual" (Equal) button click
+        // Controlador de eventos para el clic en el botón "Igual"
         private void btnIgual_Click(object sender, RoutedEventArgs e)
         {
-            // Set the content of the input textbox to be equal to the current content of the output textbox
-            // This allows the user to use the result of the previous expression in a new calculation.
+            // Establecer el contenido del cuadro de texto de entrada para que sea igual al contenido actual del cuadro de texto de salida
+            // Esto permite al usuario usar el resultado de la expresión anterior en un nuevo cálculo.
             tbInput.Text = tbOutput.Text;
         }
 
+        // Controlador de eventos para el cambio de texto en el cuadro de texto de entrada
         private void tbInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            // Evaluate the current expression and display the result in the output textbox
-            if (tbInput.Text.Length > 0 && tbOutput!=null)
+            // Evaluar la expresión actual y mostrar el resultado en el cuadro de texto de salida
+            if (tbInput.Text.Length > 0 && tbOutput != null)
             {
                 tbOutput.Text = Calcula.EvaluarExpresion(tbInput.Text);
             }
